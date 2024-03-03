@@ -70,12 +70,16 @@ void sendSensor()
   float t = dht.readTemperature();
   int analogSensor = analogRead(gas);
 
-  Blynk.virtualWrite(V2, analogSensor);
+  float ppm = map(analogSensor, 0, 1023, 0, 1000); // Example conversion assuming linear relationship
+
+
+  Blynk.virtualWrite(V2, ppm);
   Blynk.virtualWrite(V0, t);
   Blynk.virtualWrite(V1, h);
 
   Serial.print("Gas Value: ");
-  Serial.println(analogSensor);
+  Serial.print(ppm);
+  Serial.println(" ppm");
   Serial.print("Temperature : ");
   Serial.print(t);
   Serial.print("    Humidity : ");
